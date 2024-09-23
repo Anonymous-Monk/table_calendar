@@ -41,7 +41,7 @@ Widget setupTestWidget(
       isWithinRange: isWithinRange,
       isHoliday: isHoliday,
       isTodayHighlighted: isTodayHighlighted,
-      locale: locale,
+      locale: locale, holidayMapInfo: {},
     ),
   );
 }

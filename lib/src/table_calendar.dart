@@ -3,6 +3,7 @@
 
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
@@ -174,6 +175,8 @@ class TableCalendar<T> extends StatefulWidget {
   /// Function deciding whether given day is treated as a holiday.
   final bool Function(DateTime day)? holidayPredicate;
 
+  final Map<String, dynamic> Function(DateTime day)? holidayMapInfo;
+
   /// Called whenever a day range gets selected.
   final OnRangeSelected? onRangeSelected;
 
@@ -250,6 +253,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.enabledDayPredicate,
     this.selectedDayPredicate,
     this.holidayPredicate,
+    this.holidayMapInfo,
     this.onRangeSelected,
     this.onDaySelected,
     this.onDayLongPressed,
@@ -619,6 +623,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         final isDisabled = _isDayDisabled(day);
         final isWeekend = _isWeekend(day, weekendDays: widget.weekendDays);
 
+        Map<String, dynamic>? holidayMapInfo = widget.holidayMapInfo?.call(day);
+
         Widget content = CellContent(
           key: ValueKey('CellContent-${day.year}-${day.month}-${day.day}'),
           day: day,
@@ -635,10 +641,13 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           isDisabled: isDisabled,
           isWeekend: isWeekend,
           isHoliday: widget.holidayPredicate?.call(day) ?? false,
+          holidayMapInfo: holidayMapInfo ?? {},
           locale: widget.locale,
         );
 
         children.add(content);
+
+
 
         if (!isDisabled) {
           final events = widget.eventLoader?.call(day) ?? [];
@@ -683,6 +692,30 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             children.add(markerWidget);
           }
         }
+
+        final isHoliday = widget.holidayMapInfo?.call(day)['isHoliday'];
+        final isWork = widget.holidayMapInfo?.call(day)['isWork'];
+
+        Widget? workWidget = widget.calendarBuilders.workBuilder?.call(context, isWork, isHoliday);
+
+                    final wCenter = constraints.maxHeight / 2;
+
+            final workSize = 22;
+
+            final workAutoAlignmentTop = wCenter - 24;
+
+            workWidget = PositionedDirectional(
+              top: workAutoAlignmentTop,
+              end: 12.0,
+              child: Container(
+                color: Colors.purple,
+                child: Text('T'),
+              ),
+            );
+
+            if (workWidget != null) {
+            children.add(workWidget);
+          }
 
         return Stack(
           alignment: widget.calendarStyle.markersAlignment,

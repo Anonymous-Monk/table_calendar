@@ -3,7 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 
-import '../shared/utils.dart' show DayBuilder, FocusedDayBuilder;
+import '../shared/utils.dart' show DayBuilder, FocusedDayBuilder, WorkDayBuilder;
 
 /// Signature for a function that creates a single event marker for a given `day`.
 /// Contains a single `event` associated with that `day`.
@@ -26,6 +26,9 @@ typedef HighlightBuilder = Widget? Function(
 class CalendarBuilders<T> {
   /// Custom builder for day cells, with a priority over any other builder.
   final FocusedDayBuilder? prioritizedBuilder;
+
+  final WorkDayBuilder? workBuilder;
+  
 
   /// Custom builder for a day cell that matches the current day.
   final FocusedDayBuilder? todayBuilder;
@@ -85,6 +88,7 @@ class CalendarBuilders<T> {
   /// Creates `CalendarBuilders` for `TableCalendar` widget.
   const CalendarBuilders({
     this.prioritizedBuilder,
+    this.workBuilder,
     this.todayBuilder,
     this.selectedBuilder,
     this.rangeStartBuilder,

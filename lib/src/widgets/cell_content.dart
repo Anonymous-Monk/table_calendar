@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -23,6 +24,7 @@ class CellContent extends StatelessWidget {
   final bool isWeekend;
   final CalendarStyle calendarStyle;
   final CalendarBuilders calendarBuilders;
+  final Map<String, dynamic> holidayMapInfo;
 
   const CellContent({
     Key? key,
@@ -40,6 +42,7 @@ class CellContent extends StatelessWidget {
     required this.isDisabled,
     required this.isHoliday,
     required this.isWeekend,
+    required this.holidayMapInfo,
     this.locale,
   }) : super(key: key);
 
@@ -67,6 +70,10 @@ class CellContent extends StatelessWidget {
     final alignment = calendarStyle.cellAlignment;
     final duration = const Duration(milliseconds: 250);
 
+    final subText = holidayMapInfo['lunarDay'];
+
+    final isHolidayTarget = holidayMapInfo['isHolidayTarget'];
+
     if (isDisabled) {
       cell = calendarBuilders.disabledBuilder?.call(context, day, focusedDay) ??
           AnimatedContainer(
@@ -75,7 +82,12 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: calendarStyle.disabledDecoration,
             alignment: alignment,
-            child: Text(text, style: calendarStyle.disabledTextStyle),
+            child: Column(
+              children: [
+                Text(text, style: calendarStyle.disabledTextStyle),
+                Text(subText, style: calendarStyle.disabledSubTextStyle)
+              ],
+            ),
           );
     } else if (isSelected) {
       cell = calendarBuilders.selectedBuilder?.call(context, day, focusedDay) ??
@@ -85,7 +97,12 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: calendarStyle.selectedDecoration,
             alignment: alignment,
-            child: Text(text, style: calendarStyle.selectedTextStyle),
+            child: Column(
+              children: [
+                Text(text, style: calendarStyle.selectedTextStyle),
+                Text(subText, style: calendarStyle.selectedSubTextStyle)
+              ],
+            ),
           );
     } else if (isRangeStart) {
       cell =
@@ -96,7 +113,12 @@ class CellContent extends StatelessWidget {
                 padding: padding,
                 decoration: calendarStyle.rangeStartDecoration,
                 alignment: alignment,
-                child: Text(text, style: calendarStyle.rangeStartTextStyle),
+                child: Column(
+                  children: [
+                    Text(text, style: calendarStyle.rangeStartTextStyle),
+                    Text(subText, style: calendarStyle.rangeStartSubTextStyle)
+                  ],
+                ),
               );
     } else if (isRangeEnd) {
       cell = calendarBuilders.rangeEndBuilder?.call(context, day, focusedDay) ??
@@ -106,7 +128,12 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: calendarStyle.rangeEndDecoration,
             alignment: alignment,
-            child: Text(text, style: calendarStyle.rangeEndTextStyle),
+            child: Column(
+              children: [
+                Text(text, style: calendarStyle.rangeEndTextStyle),
+                Text(subText, style: calendarStyle.rangeEndSubTextStyle)
+              ],
+            ),
           );
     } else if (isToday && isTodayHighlighted) {
       cell = calendarBuilders.todayBuilder?.call(context, day, focusedDay) ??
@@ -116,7 +143,12 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: calendarStyle.todayDecoration,
             alignment: alignment,
-            child: Text(text, style: calendarStyle.todayTextStyle),
+            child: Column(
+              children: [
+                Text(text, style: calendarStyle.todayTextStyle),
+                Text(subText, style: calendarStyle.todaySubTextStyle)
+              ],
+            ),
           );
     } else if (isHoliday) {
       cell = calendarBuilders.holidayBuilder?.call(context, day, focusedDay) ??
@@ -126,7 +158,12 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: calendarStyle.holidayDecoration,
             alignment: alignment,
-            child: Text(text, style: calendarStyle.holidayTextStyle),
+            child: Column(
+              children: [
+                Text(text, style: calendarStyle.holidayTextStyle),
+                Text(subText, style: calendarStyle.holidaySubTextStyle)
+              ],
+            ),
           );
     } else if (isWithinRange) {
       cell =
@@ -137,7 +174,12 @@ class CellContent extends StatelessWidget {
                 padding: padding,
                 decoration: calendarStyle.withinRangeDecoration,
                 alignment: alignment,
-                child: Text(text, style: calendarStyle.withinRangeTextStyle),
+                child: Column(
+                  children: [
+                    Text(text, style: calendarStyle.withinRangeTextStyle),
+                    Text(subText, style: calendarStyle.withinRangeSubTextStyle)
+                  ],
+                ),
               );
     } else if (isOutside) {
       cell = calendarBuilders.outsideBuilder?.call(context, day, focusedDay) ??
@@ -147,7 +189,12 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: calendarStyle.outsideDecoration,
             alignment: alignment,
-            child: Text(text, style: calendarStyle.outsideTextStyle),
+            child: Column(
+              children: [
+                Text(text, style: calendarStyle.outsideTextStyle),
+                Text(subText, style: calendarStyle.outsideSubTextStyle)
+              ],
+            ),
           );
     } else {
       cell = calendarBuilders.defaultBuilder?.call(context, day, focusedDay) ??
@@ -159,11 +206,21 @@ class CellContent extends StatelessWidget {
                 ? calendarStyle.weekendDecoration
                 : calendarStyle.defaultDecoration,
             alignment: alignment,
-            child: Text(
-              text,
-              style: isWeekend
-                  ? calendarStyle.weekendTextStyle
-                  : calendarStyle.defaultTextStyle,
+            child: Column(
+              children: [
+                Text(
+                  text,
+                  style: isWeekend
+                      ? calendarStyle.weekendTextStyle
+                      : calendarStyle.defaultTextStyle,
+                ),
+                Text(
+                  subText,
+                  style: isHolidayTarget ? calendarStyle.defaultHolidayTextStyle : isWeekend
+                      ? calendarStyle.weekendSubTextStyle
+                      : calendarStyle.defaultSubTextStyle,
+                )
+              ],
             ),
           );
     }
