@@ -696,26 +696,35 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         final isHoliday = widget.holidayMapInfo?.call(day)['isHoliday'];
         final isWork = widget.holidayMapInfo?.call(day)['isWork'];
 
-        Widget? workWidget = widget.calendarBuilders.workBuilder?.call(context, isWork, isHoliday);
+        if(isHoliday) {
+          Widget? workWidget = widget.calendarBuilders.workBuilder?.call(context, isWork, isHoliday);
 
-                    final wCenter = constraints.maxHeight / 2;
+          final wCenter = constraints.maxHeight / 2;
 
-            final workSize = 22;
+          final workAutoAlignmentTop = wCenter - 18;
 
-            final workAutoAlignmentTop = wCenter - 24;
-
-            workWidget = PositionedDirectional(
-              top: workAutoAlignmentTop,
-              end: 12.0,
-              child: Container(
-                color: Colors.purple,
-                child: Text('T'),
+          workWidget = PositionedDirectional(
+            top: workAutoAlignmentTop,
+            end: 6.0,
+            child: Container(
+              width: 13,
+              height: 13,
+              decoration: BoxDecoration(
+                color: !isOutside ? isWork ? Colors.red : Colors.green : isWork ? Colors.red[100] : Colors.green[200],
+                shape: BoxShape.circle,
               ),
-            );
+              child: Center(
+                child: Text(isWork ? '班' : '休',style: TextStyle(fontSize: 8,color: isOutside ? Colors.white70 : Colors.white),),
+              ),
+            ),
+          );
 
-            if (workWidget != null) {
+          if (workWidget != null) {
             children.add(workWidget);
           }
+        }
+
+
 
         return Stack(
           alignment: widget.calendarStyle.markersAlignment,
