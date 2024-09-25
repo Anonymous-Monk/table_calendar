@@ -83,8 +83,11 @@ class CellContent extends StatelessWidget {
             decoration: calendarStyle.disabledDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(text, style: calendarStyle.disabledTextStyle),
+                SizedBox(height: 2,),
                 Text(subText, style: calendarStyle.disabledSubTextStyle)
               ],
             ),
@@ -98,8 +101,11 @@ class CellContent extends StatelessWidget {
             decoration: calendarStyle.selectedDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(text, style: calendarStyle.selectedTextStyle),
+                SizedBox(height: 2,),
                 Text(subText, style: calendarStyle.selectedSubTextStyle)
               ],
             ),
@@ -114,8 +120,11 @@ class CellContent extends StatelessWidget {
                 decoration: calendarStyle.rangeStartDecoration,
                 alignment: alignment,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(text, style: calendarStyle.rangeStartTextStyle),
+                    SizedBox(height: 2,),
                     Text(subText, style: calendarStyle.rangeStartSubTextStyle)
                   ],
                 ),
@@ -129,8 +138,11 @@ class CellContent extends StatelessWidget {
             decoration: calendarStyle.rangeEndDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(text, style: calendarStyle.rangeEndTextStyle),
+                SizedBox(height: 2,),
                 Text(subText, style: calendarStyle.rangeEndSubTextStyle)
               ],
             ),
@@ -144,8 +156,11 @@ class CellContent extends StatelessWidget {
             decoration: calendarStyle.todayDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(text, style: calendarStyle.todayTextStyle),
+                SizedBox(height: 2,),
                 Text(subText, style: calendarStyle.todaySubTextStyle)
               ],
             ),
@@ -159,8 +174,11 @@ class CellContent extends StatelessWidget {
             decoration: calendarStyle.holidayDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(text, style: calendarStyle.holidayTextStyle),
+                SizedBox(height: 2,),
                 Text(subText, style: calendarStyle.holidaySubTextStyle)
               ],
             ),
@@ -175,8 +193,11 @@ class CellContent extends StatelessWidget {
                 decoration: calendarStyle.withinRangeDecoration,
                 alignment: alignment,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(text, style: calendarStyle.withinRangeTextStyle),
+                    SizedBox(height: 2,),
                     Text(subText, style: calendarStyle.withinRangeSubTextStyle)
                   ],
                 ),
@@ -190,8 +211,11 @@ class CellContent extends StatelessWidget {
             decoration: calendarStyle.outsideDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(text, style: calendarStyle.outsideTextStyle),
+                SizedBox(height: 2,),
                 Text(subText, style: calendarStyle.outsideSubTextStyle)
               ],
             ),
@@ -207,6 +231,8 @@ class CellContent extends StatelessWidget {
                 : calendarStyle.defaultDecoration,
             alignment: alignment,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   text,
@@ -214,6 +240,7 @@ class CellContent extends StatelessWidget {
                       ? calendarStyle.weekendTextStyle
                       : calendarStyle.defaultTextStyle,
                 ),
+                SizedBox(height: 2,),
                 Text(
                   subText,
                   style: isHolidayTarget ? calendarStyle.defaultHolidayTextStyle : isWeekend
